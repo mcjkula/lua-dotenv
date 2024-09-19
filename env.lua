@@ -1,19 +1,26 @@
 local M = {}
+local env_vars = {}
 
 function M.get(key, default)
-  local value = os.getenv(key)
-  if value == nil then
-    return default
-  end
-  return value
+  local value = env_vars[key] or os.getenv(key)
+  return value or default
 end
 
 function M.load_dotenv(file_path)
-  for line in io.lines(file_path or ".env") do
-    local key, value = line:match("^(%w+)%s*=%s*(.+)$")
+  file_path = file_path or os.getenv("HOME") .. "/.config/.env"
+  local file, _ = io.open(file_path, "r")
+  if not file then
+    return
+  end
+
+  local content = file:read("*all")
+  file:close()
+
+  for line in content:gmatch("[^\r\n]+") do
+    local key, value = line:match("^([%w_]+)%s*=%s*(.+)$")
     if key and value then
       value = value:gsub("^[\"'](.-)[\"\']$", "%1")
-      os.setenv(key, value)
+      env_vars[key] = value
     end
   end
 end
