@@ -23,25 +23,32 @@ Using LuaRocks:
 
 1. Create a .env file:
 
-By default, lua-dotenv looks for the .env file in ~/.config/.env. You can also specify a custom location when loading the file.
+By default, lua-dotenv looks for the .env file in `~/.config/.env`. You can also specify a custom location when loading the file.
 
 Example .env file content:
 
+```lua
 DATABASE_URL=postgresql://user:password@localhost:5432/mydb
 DEBUG=true
 MAX_CONNECTIONS=100
+```
 
 2. In your Lua script:
 
+```lua
 local dotenv = require("lua-dotenv")
+```
 
--- Load variables from default .env file location (~/.config/.env)
+-- Load variables from default .env file location (`~/.config/.env`)
+```lua
 dotenv.load_dotenv()
+```
 
 -- Or, specify a custom .env file location
--- dotenv.load_dotenv("/path/to/your/.env")
+-- `dotenv.load_dotenv("/path/to/your/.env")`
 
 -- Access environment variables
+```lua
 local db_url = dotenv.get("DATABASE_URL")
 local debug_mode = dotenv.get("DEBUG")
 local max_conn = dotenv.get("MAX_CONNECTIONS", "50")  -- "50" is the default value
@@ -49,11 +56,12 @@ local max_conn = dotenv.get("MAX_CONNECTIONS", "50")  -- "50" is the default val
 print("Database URL:", db_url)
 print("Debug mode:", debug_mode)
 print("Max connections:", max_conn)
+```
 
 ## Functions
 
-- dotenv.load_dotenv(file_path): Loads environment variables from the specified file path. If no path is provided, it defaults to ~/.config/.env.
-- dotenv.get(key, default): Retrieves the value of the environment variable specified by key. If the variable is not set, it returns the default value.
+- `dotenv.load_dotenv(file_path)`: Loads environment variables from the specified file path. If no path is provided, it defaults to ~/.config/.env.
+- `dotenv.get(key, default)`: Retrieves the value of the environment variable specified by key. If the variable is not set, it returns the default value.
 
 ## License
 
