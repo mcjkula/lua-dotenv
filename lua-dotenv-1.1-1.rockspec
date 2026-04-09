@@ -1,3 +1,4 @@
+rockspec_format = "3.0"
 package = "lua-dotenv"
 version = "1.1-1"
 source = {
